@@ -42,7 +42,7 @@ public class RecommendationService extends Application<RecommendationConfigurati
 				using(recommendationConfiguration.getHttpClientConfiguration())
                 .build("analysis-service");
 
-		recommendationEnvironment.lifecycle().manage((Managed) httpAnalysisService);
+		//recommendationEnvironment.lifecycle().manage((Managed) httpAnalysisService);
 		
 		final RecommendationResource recommendationResource = new RecommendationResource(
 				recommendationConfiguration.getDefaultProduct(),

@@ -1,4 +1,4 @@
-package de.codecentric.awesome.recommendation.client;
+package de.codecentric.awesome.recommendation.client.AnalysisService;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

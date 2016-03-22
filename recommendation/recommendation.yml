@@ -3,12 +3,9 @@ defaultProduct: P001
 defaultUser: unknown
 
 # Analysis Config
-analysisServiceHttpClient:
-  userAgent: AnalysisService
-  proxy:
+analysisService:
     host: localhost
     port: 8102
-    scheme : http
 
 server:
 #  softNofileLimit: 1000

@@ -1,6 +1,7 @@
 package de.codecentric.awesome.recommendation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import de.codecentric.awesome.recommendation.client.AnalysisService.AnalysisServiceFactory;
 import io.dropwizard.Configuration;
 import io.dropwizard.client.HttpClientConfiguration;
 
@@ -18,33 +19,27 @@ public class RecommendationConfiguration extends Configuration{
     @NotEmpty
     private String defaultUser;
 
-//	private AnalysisServiceFactory analysisService = new AnalysisServiceFactory();
-
 	@Valid
     @NotNull
-    private HttpClientConfiguration analysisService = new HttpClientConfiguration();
+    private AnalysisServiceFactory analysisService = new AnalysisServiceFactory();
+//    private HttpClientConfiguration analysisService = new HttpClientConfiguration();
+
 	
-	
-	@JsonProperty("analysisServiceHttpClient")
-    public HttpClientConfiguration getHttpClientConfiguration() {
+	@JsonProperty("analysisService")
+    public AnalysisServiceFactory getAnalysisServiceFactory(){
         return analysisService;
     }
-
-    @JsonProperty("analysisServiceHttpClient")
-    public void setHttpClientConfiguration(HttpClientConfiguration analysisService) {
-        this.analysisService = analysisService;
-    }
-	
-	
-//    @JsonProperty("analysisService")
-//    public AnalysisServiceFactory getAnalysisServiceFactory() {
+//    public HttpClientConfiguration getAnalysisServiceConfiguration() {
 //        return analysisService;
 //    }
-//
-//    @JsonProperty("analysisService")
-//    public void setAnalysisServiceFactory(AnalysisServiceFactory factory) {
-//        this.analysisService = factory;
-//    }	
+
+    @JsonProperty("analysisService")
+    public void setAnalysisService(AnalysisServiceFactory factory){
+        this.analysisService = factory;
+    }
+//    public void setAnalysisServiceConfiguration(HttpClientConfiguration analysisService) {
+//        this.analysisService = analysisService;
+//    }
 
     @JsonProperty
     public String getDefaultUser() {

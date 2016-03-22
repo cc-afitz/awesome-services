@@ -21,6 +21,9 @@ public class AnalysisServiceFactory {
     @Max(65535)
     private int port = 5672;
 
+    @NotEmpty
+    private String path;
+
     @JsonProperty
     public String getHost() {
         return host;
@@ -41,6 +44,17 @@ public class AnalysisServiceFactory {
         this.port = port;
     }
 
+    @JsonProperty
+
+    public String getPath() {
+        return path;
+    }
+
+    @JsonProperty
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     public AnalysisServiceClient build(Environment environment) {
 
         final HttpClientConfiguration httpConfig = new HttpClientConfiguration();
@@ -52,7 +66,7 @@ public class AnalysisServiceFactory {
         // register the httpClient
 //        environment.jersey().register(httpClient);
 
-        AnalysisServiceClient client = new AnalysisServiceClientAdapter(getHost(), getPort(), httpClient);
+        AnalysisServiceClient client = new AnalysisServiceClientAdapter(getHost(), getPort(), getPath(), httpClient);
 
         environment.lifecycle().manage(new Managed() {
             @Override

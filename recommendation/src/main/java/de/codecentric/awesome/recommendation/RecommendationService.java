@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class RecommendationService extends Application<RecommendationConfiguration>{
 
-//	private static final Logger logger = LoggerFactory.getLogger(RecommendationService.class);
+	private static final Logger logger = LoggerFactory.getLogger(RecommendationService.class);
 
 	public static void main(String[] args) throws Exception {
 		new RecommendationService().run(args);

@@ -1,5 +1,6 @@
 package de.codecentric.awesome.recommendation.resources;
 
+import com.codahale.metrics.annotation.Metered;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.base.Optional;
 

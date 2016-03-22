@@ -6,6 +6,7 @@ defaultUser: unknown
 analysisService:
     host: localhost
     port: 8102
+    path: /recommendation-db
 
 server:
 #  softNofileLimit: 1000

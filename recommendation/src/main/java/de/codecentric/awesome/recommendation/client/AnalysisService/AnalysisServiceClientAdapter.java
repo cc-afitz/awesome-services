@@ -9,6 +9,8 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URI;
@@ -19,13 +21,17 @@ import java.net.URISyntaxException;
  */
 public class AnalysisServiceClientAdapter implements AnalysisServiceClient {
 
+    private static final Logger logger = LoggerFactory.getLogger(AnalysisServiceClient.class);
+
     private String host = null;
     private int port = 0;
+    private String path;
     HttpClient httpAnalysisService;
 
-    public AnalysisServiceClientAdapter(String host, int port, HttpClient httpClient) {
+    public AnalysisServiceClientAdapter(String host, int port, String path, HttpClient httpClient) {
         this.port = port;
         this.host = host;
+        this.path = path;
         this.httpAnalysisService = httpClient;
     }
 
@@ -35,14 +41,13 @@ public class AnalysisServiceClientAdapter implements AnalysisServiceClient {
         try {
             uri = new URIBuilder()
                     .setScheme("http")
-                    .setHost("localhost")
-                    .setPort(8102)
-                    .setPath("/recommendation-db")
+                    .setHost(host)
+                    .setPort(port)
+                    .setPath(path)
                     .setParameter("product", product)
                     .build();
         } catch (URISyntaxException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error(e.toString());
         }
 
         HttpGet get = new HttpGet(uri);
@@ -66,12 +71,13 @@ public class AnalysisServiceClientAdapter implements AnalysisServiceClient {
 
         String responseBody = null;
         try {
+            logger.info("----------------------------------------");
+            logger.info("get = " + uri.toString());
             responseBody = httpAnalysisService.execute(get, responseHandler);
-            System.out.println("----------------------------------------");
-            System.out.println(responseBody);
-            System.out.println("----------------------------------------");
+            logger.info("response = " + responseBody);
+            logger.info("----------------------------------------");
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         }
 
         Products recommendProducts = null;

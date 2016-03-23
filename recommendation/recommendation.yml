@@ -7,6 +7,15 @@ analysisService:
     host: localhost
     port: 8102
     path: /recommendation-db
+#    timeout: 500ms
+#    connectionTimeout: 500ms
+#    timeToLive: 1h
+#    cookiesEnabled: false
+#    maxConnections: 1024
+#    maxConnectionsPerRoute: 1024
+#    keepAlive: 0ms
+#    retries: 0
+
 
 server:
 #  softNofileLimit: 1000
@@ -41,10 +50,10 @@ server:
 logging:
 
   # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
-  level: INFO
+  level: ERROR
 
   # Logger-specific levels.
   loggers:
 
     # Sets the level for 'com.example.app' to DEBUG.
-    de.codecentric.awesome.recommendation: INFO
+    de.codecentric.awesome.recommendation: ERROR

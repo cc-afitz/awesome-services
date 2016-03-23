@@ -1,6 +1,7 @@
 package de.codecentric.awesome.recommendation.client.AnalysisService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.codecentric.awesome.recommendation.core.Product;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -21,7 +22,7 @@ import java.net.URISyntaxException;
  */
 public class AnalysisServiceClientAdapter implements AnalysisServiceClient {
 
-    private static final Logger logger = LoggerFactory.getLogger(AnalysisServiceClient.class);
+    private static final Logger logger = LoggerFactory.getLogger(AnalysisServiceClientAdapter.class);
 
     private String host = null;
     private int port = 0;
@@ -36,7 +37,7 @@ public class AnalysisServiceClientAdapter implements AnalysisServiceClient {
     }
 
     @Override
-    public Products executeGetProducts(String product) {
+    public Products executeGetProducts(String product) throws AnalysisServiceException{
         URI uri = null;
         try {
             uri = new URIBuilder()
@@ -76,8 +77,15 @@ public class AnalysisServiceClientAdapter implements AnalysisServiceClient {
             responseBody = httpAnalysisService.execute(get, responseHandler);
             logger.info("response = " + responseBody);
             logger.info("----------------------------------------");
+        } catch (ClientProtocolException e){
+            logger.error("ClientProtocolException"  + e.getCause());
+            logger.error("ClientProtocolException"  + e.getMessage());
+            throw new AnalysisServiceException("AnalysisServiceException: " + e.getMessage());
         } catch (IOException e) {
-            logger.error(e.toString());
+//            logger.error(e.toString());
+            logger.error("IOException response AnaylisisClientAdapter: " + e.getCause());
+            logger.error("IOException response AnaylisisClientAdapter: " + e.getMessage());
+            throw new AnalysisServiceException("AnalysisService is not available: " + e.getMessage());
         }
 
         Products recommendProducts = null;
@@ -85,8 +93,22 @@ public class AnalysisServiceClientAdapter implements AnalysisServiceClient {
         try {
             recommendProducts = objectMapper.readValue(responseBody, Products.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("IOException Mapper");
         }
         return recommendProducts;
+    }
+
+    @Override
+    public Boolean ping() {
+
+        Boolean available = true;
+
+        try {
+            this.executeGetProducts("P00T");
+        } catch (AnalysisServiceException e) {
+            logger.error(e.getMessage());
+            available = false;
+        }
+        return available;
     }
 }

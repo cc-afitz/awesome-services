@@ -22,24 +22,17 @@ public class RecommendationConfiguration extends Configuration{
 	@Valid
     @NotNull
     private AnalysisServiceFactory analysisService = new AnalysisServiceFactory();
-//    private HttpClientConfiguration analysisService = new HttpClientConfiguration();
 
 	
 	@JsonProperty("analysisService")
     public AnalysisServiceFactory getAnalysisServiceFactory(){
         return analysisService;
     }
-//    public HttpClientConfiguration getAnalysisServiceConfiguration() {
-//        return analysisService;
-//    }
 
     @JsonProperty("analysisService")
     public void setAnalysisService(AnalysisServiceFactory factory){
         this.analysisService = factory;
     }
-//    public void setAnalysisServiceConfiguration(HttpClientConfiguration analysisService) {
-//        this.analysisService = analysisService;
-//    }
 
     @JsonProperty
     public String getDefaultUser() {

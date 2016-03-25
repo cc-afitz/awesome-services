@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Products {
 
-    @JsonProperty("products")
+        @JsonProperty("products")
         private List<String> products;
 
 

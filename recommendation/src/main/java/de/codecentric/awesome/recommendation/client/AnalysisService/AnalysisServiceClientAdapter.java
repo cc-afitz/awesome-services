@@ -78,12 +78,9 @@ public class AnalysisServiceClientAdapter implements AnalysisServiceClient {
             logger.info("response = " + responseBody);
             logger.info("----------------------------------------");
         } catch (ClientProtocolException e){
-            logger.error("ClientProtocolException"  + e.getCause());
             logger.error("ClientProtocolException"  + e.getMessage());
             throw new AnalysisServiceException("AnalysisServiceException: " + e.getMessage());
         } catch (IOException e) {
-//            logger.error(e.toString());
-            logger.error("IOException response AnaylisisClientAdapter: " + e.getCause());
             logger.error("IOException response AnaylisisClientAdapter: " + e.getMessage());
             throw new AnalysisServiceException("AnalysisService is not available: " + e.getMessage());
         }
@@ -93,8 +90,10 @@ public class AnalysisServiceClientAdapter implements AnalysisServiceClient {
         try {
             recommendProducts = objectMapper.readValue(responseBody, Products.class);
         } catch (IOException e) {
-            logger.error("IOException Mapper");
+            logger.error("IOException Mapper: " + e.getMessage());
+            throw new AnalysisServiceException("AnalysisService is not available: " + e.getMessage());
         }
+
         return recommendProducts;
     }
 
@@ -106,8 +105,10 @@ public class AnalysisServiceClientAdapter implements AnalysisServiceClient {
         try {
             this.executeGetProducts("P00T");
         } catch (AnalysisServiceException e) {
-            logger.error(e.getMessage());
+            logger.error("ping get no response: " + e.getMessage());
             available = false;
+        } catch (Exception e){
+            System.out.println("oh no, more exceptions" + e.getStackTrace());
         }
         return available;
     }

@@ -19,7 +19,7 @@ public class AnalysisServiceHealthCheck extends HealthCheck {
     protected Result check() throws Exception {
 
         if (analysisService.ping()) {
-            return Result.healthy();
+            return Result.healthy("Successfull ping AnalyseService: Service available");
         }
         return Result.unhealthy("Can't ping AnalyseService: Service unavailable");
 
